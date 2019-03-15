@@ -1,9 +1,10 @@
-#Brute force die roll
+#Dice 
+#Determine the probability of getting given scores for given dice
+#Math originally checked against https://www.lucamoroni.it/the-dice-roll-sum-problem/
+
 import math
 import logging
 k_0 = 0
-
-#https://www.lucamoroni.it/the-dice-roll-sum-problem/
 
 def binomialCoefficient(top, bottom):
 	#Top chooses Bottom
@@ -23,6 +24,7 @@ def probabilityScoreOnDice(p, n, s):
 	logging.debug("Probability of scoring " + str(p) + " on " + str(n) + "d" + str(s) + " is " + str(returnable))
 	return returnable
 
+
 def probabilityLessThan(p, n, s):
 	x = n
 	total = 0
@@ -32,6 +34,7 @@ def probabilityLessThan(p, n, s):
 		x = x+1
 	logging.debug("Probability of scoring under " + str(p) + " on " + str(n) + "d" + str(s) + " is " + str(total))
 	return total
+
 
 def probabilityGreaterThan(p, n, s):
 	x = n*s
@@ -43,12 +46,23 @@ def probabilityGreaterThan(p, n, s):
 	logging.debug("Probability of scoring over " + str(p) + " on " + str(n) + "d" + str(s) + " is " + str(total))
 	return total
 
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
-scoreList = []
-scoreList.append(probabilityLessThan(17, 6, 8))
-scoreList.append(probabilityScoreOnDice(17,6,8))
-scoreList.append(probabilityGreaterThan(17,6,8))
+def probabilityWeights(p, n, s):
+	scoreList = []
+	scoreList.append(probabilityLessThan(p, n, s))
+	scoreList.append(probabilityScoreOnDice(p,n,s))
+	scoreList.append(probabilityGreaterThan(p,n,s))
+	return scoreList
 
-print(scoreList)
-print(sum(scoreList))
+
+if __name__ == "__main__":
+
+	logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+
+	scoreList = []
+	scoreList.append(probabilityLessThan(17, 6, 8))
+	scoreList.append(probabilityScoreOnDice(17,6,8))
+	scoreList.append(probabilityGreaterThan(17,6,8))
+
+	print(scoreList)
+	print(sum(scoreList))
