@@ -12,8 +12,16 @@ def binomialCoefficient(top, bottom):
 	lower = math.factorial(bottom)*math.factorial(top-bottom)
 	return upper/lower
 
+def consecutiveRolls(n, s=6):
+	#Odds of rolling any side are 1/s where s is the amount of sides on the die
+	#For consecutive rolls, the odds are raised exponentially n times, where n are the number of rolls
+	return math.pow((1/s), n)
 
-def probabilityScoreOnDice(p, n, s):
+def missRoll(n, s=6):
+	return 1-consecutiveRolls(n, s)
+
+
+def probabilityScoreOnDice(p, n, s=6):
 	#Returns the probability of scoring p points on n dice with s sides each
 	k_max = math.floor((p-n)/s)
 	summation = 0
@@ -25,7 +33,7 @@ def probabilityScoreOnDice(p, n, s):
 	return returnable
 
 
-def probabilityLessThan(p, n, s):
+def probabilityLessThan(p, n, s=6):
 	x = n
 	total = 0
 	while x < p:
@@ -36,7 +44,7 @@ def probabilityLessThan(p, n, s):
 	return total
 
 
-def probabilityGreaterThan(p, n, s):
+def probabilityGreaterThan(p, n, s=6):
 	x = n*s
 	total = 0
 	while x > p:
@@ -47,7 +55,7 @@ def probabilityGreaterThan(p, n, s):
 	return total
 
 
-def probabilityWeights(p, n, s):
+def probabilityWeights(p, n, s=6):
 	scoreList = []
 	scoreList.append(probabilityLessThan(p, n, s))
 	scoreList.append(probabilityScoreOnDice(p,n,s))
